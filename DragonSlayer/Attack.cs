@@ -80,7 +80,7 @@ public class Attack
 
         Console.WriteLine($"Hero HP: {hero.Health}");
         Console.WriteLine($"Hero Level: {hero.Level} : Experience: {hero.Experience}/{hero.ExperienceCap}");
-        Console.WriteLine($"Hero HP: {hero.Health}");
+        Console.WriteLine($"Hero ngt: {hero.Health}");
         Console.ReadLine();
     }
     public void CastingSpell()
