@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace DragonSlayer;
 public class Attack
 {
+    public Color color = new Color();
+
     string spellCast = null;
     string meleeAttack = null;
 
@@ -78,9 +80,16 @@ public class Attack
         //Här kommer attack simulationen mellan drake och hero komma
         Console.Clear();
 
-        Console.WriteLine($"Hero HP: {hero.Health}");
+        Console.Write($"Hero HP:");
+        if (hero.Health > hero.MaxHealth * 0.6)
+            color.ColorGreen(hero.Health);
+        else if (hero.Health < hero.MaxHealth * 0.31)
+            color.ColorRed(hero.Health);
+        else
+            color.ColorYellow(hero.Health);
+
         Console.WriteLine($"Hero Level: {hero.Level} : Experience: {hero.Experience}/{hero.ExperienceCap}");
-        Console.WriteLine($"Hero ngt: {hero.Health}");
+        //Console.WriteLine($"Hero ngt: {hero.Health}");
         Console.ReadLine();
     }
     public void CastingSpell()

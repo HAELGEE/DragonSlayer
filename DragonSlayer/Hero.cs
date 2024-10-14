@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace DragonSlayer;
@@ -15,9 +16,10 @@ public class Hero
     public int SpellPower { get; set; }
     public int Level { get; set; }
     public int Experience { get; set; }
-    public int ExperienceCap = 100;
+    public int ExperienceCap { get; set; } = 100;
     public int HealingPoitions { get; set; }
     public int MaxHealth { get; set; }
+    public bool tries;
 
     public Hero(int health, int strength, int spellPower, int level)
     {
@@ -27,30 +29,24 @@ public class Hero
         SpellPower = spellPower;
         Level = level;
     }
+    public Hero(string name)
+    {
+        Name = name;
+    }
+    
 
     public void Mage()
     {
-        attack. CastingSpell();
-
+        attack.CastingSpell();
     }
     public void Warrior()
     {
         attack.MeleeAttack();
     }
 
-    public void GetHeroName()
-    {
-        bool loop = true;
-        while (loop)
-        {
-            Console.WriteLine("What do you want to call your Hero?");
-            Name = Console.ReadLine();
-
-            if (Name == null && Name == "")
-                Console.WriteLine("Invalid input, try again");
-        }
-        //Skapa en ny rad i runtime
-        Console.WriteLine();
+    public void GetHeroNameAndClass()
+    {       
+        
     }
     public void Healing()
     {
@@ -63,7 +59,11 @@ public class Hero
             //Kontroll ifall Hp på hero blir mer än vad maxhp är, då sätts Hp till Maxhp!
             if (Health > MaxHealth)
                 Health = MaxHealth;
-        }
-           
+        }           
+    }
+
+    public void LevelUp()
+    {
+        ExperienceCap = Level * 100;
     }
 }

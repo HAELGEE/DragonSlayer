@@ -12,24 +12,11 @@ public class Dragon
     public int SpellPower;
     public int Level;
 
-    public Dragon()
+    public Dragon(string name, int strength, int spellpower, int level)
     {
-
-    }
-    class Red
-    {
-        public string RedName = "RedDragon";
-        
-    }
-    class Blue
-    {
-        public string BlueName = "BlueDragon";
-
-
-    }
-    class Green
-    {
-        public string GreenName = "GreenDragon";
-
+        Name = name;
+        Strength = strength;
+        SpellPower = spellpower;
+        Level = level;
     }
 }
