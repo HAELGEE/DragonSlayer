@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 namespace DragonSlayer;
 public class Attack
 {
-    public Color color = new Color();
+    static Game game = new Game();
+    public Attack()
+    {
+    }
 
     string spellCast = null;
     string meleeAttack = null;
+    
 
     public void AttackMenu(Hero hero)
     {
@@ -18,10 +22,12 @@ public class Attack
         do
         {
             Console.Clear();
-
+            
             do
             {
                 Console.Clear();
+
+                game.ShowingHeroStats();
 
                 Console.WriteLine("== Attack Menu ==");
                 Console.WriteLine("1.Attack");
@@ -40,7 +46,7 @@ public class Attack
             switch (attackmenuChoice)
             {
                 case "1":
-                    AttackSimulator(hero);
+                    game.AttackSimulator(hero);
                     break;
 
                 case "2":
@@ -48,6 +54,8 @@ public class Attack
                     do
                     {
                         Console.Clear();
+
+                        game.ShowingHeroStats();
 
                         Console.WriteLine("== INVENTORY ==");
                         Console.WriteLine($"You currently have:");
@@ -75,23 +83,6 @@ public class Attack
 
     }
 
-    public void AttackSimulator(Hero hero)
-    {
-        //Här kommer attack simulationen mellan drake och hero komma
-        Console.Clear();
-
-        Console.Write($"Hero HP:");
-        if (hero.Health > hero.MaxHealth * 0.6)
-            color.ColorGreen(hero.Health);
-        else if (hero.Health < hero.MaxHealth * 0.31)
-            color.ColorRed(hero.Health);
-        else
-            color.ColorYellow(hero.Health);
-
-        Console.WriteLine($"Hero Level: {hero.Level} : Experience: {hero.Experience}/{hero.ExperienceCap}");
-        //Console.WriteLine($"Hero ngt: {hero.Health}");
-        Console.ReadLine();
-    }
     public void CastingSpell()
     {
         //Här kommer all attack loigik för en spellcaster att komma

@@ -6,7 +6,7 @@ internal class Program
     static void Main(string[] args)
     {
         Game game = new Game();
-       
+
         string choice = null;
         do
         {
@@ -32,8 +32,8 @@ internal class Program
                             do
                             {
                                 Console.WriteLine("Do you want to try again?");
-                                Console.WriteLine("1.Yes");
-                                Console.WriteLine("2.No");
+                                Console.WriteLine("1.Yes ( Continue with your hero as it is )");
+                                Console.WriteLine("2.No ( Create a new hero and start from the beginning )");
                                 value = Console.ReadLine();
                                 if (value == "1")
                                 {
@@ -41,10 +41,14 @@ internal class Program
                                     game.GameLogic();
                                 }
                                 else
-                                    Console.WriteLine("Bye bye");
+                                {
+                                    tries = true;
+                                    Console.WriteLine("Good luck next time!");
+                                }
+
                                 Console.ReadKey();
 
-                            } while (value != "1" && value != "2");
+                            }while (tries != true);
                         }
                         else
                         {
@@ -59,12 +63,12 @@ internal class Program
                     break;
 
                 case "3":
-                    Console.WriteLine("The game is now closing, See you again!");                    
+                    Console.WriteLine("The game is now closing, See you again!");
                     break;
                 default:
                     Console.WriteLine("Invalid input, try again!");
                     break;
-            }        
+            }
         } while (choice != "3");
     }
     static public void LoadGame()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -9,9 +10,14 @@ using System.Xml.Linq;
 namespace DragonSlayer;
 class Game
 {
+    public Color color = new Color();
     private Hero hero;
     private List<Dragon> dragons;
-    private Attack attack = new Attack();    
+    private Attack attack = new Attack();
+
+    public Game()
+    {
+    }
 
     public void GameLogic()
     {
@@ -66,9 +72,52 @@ class Game
         else if (classChoice == "2")
         {
             classChoice = null;
-            Hero warrior = new Hero(100, 10, 0, 1);
+            Hero warrior = new Hero(100, 10, 0, 1);            
             attack.AttackMenu(warrior);
         }
 
     }
+    public void ShowingHeroStats()
+    {
+        Console.Write($"Hero HP:");
+        if (hero.Health > hero.MaxHealth * 0.6)
+            color.ColorGreen(hero.Health);
+        else if (hero.Health < hero.MaxHealth * 0.31)
+            color.ColorRed(hero.Health);
+        else
+            color.ColorYellow(hero.Health);
+
+        Console.WriteLine($"Hero Level: {hero.Level} : Experience: {hero.Experience}/{hero.ExperienceCap}");
+        
+        Console.WriteLine();
+    }
+
+    public void AttackSimulator(Hero hero)
+    {
+        //Här kommer attack simulationen mellan drake och hero komma
+
+        // Kontrollera vilken utav drakarna man möter
+        Random random = new Random();
+        int randomDragon = random.Next(0, 3);
+        if (randomDragon == 0)
+        {
+            Dragon Poison = new Dragon("PoisonDragon", 10, 0, hero.Level);
+        }
+        else if (randomDragon == 1)
+        {
+            Dragon Fire = new Dragon("FireDragon", 0, 10, hero.Level);
+
+        }
+        else if (randomDragon == 2)
+        {
+            Dragon Frost = new Dragon("FrostDragon", 10, 0, hero.Level);
+
+        }
+
+        Console.Clear();
+
+        ShowingHeroStats();
+    }
+
+
 }

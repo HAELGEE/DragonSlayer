@@ -17,14 +17,14 @@ public class Hero
     public int Level { get; set; }
     public int Experience { get; set; }
     public int ExperienceCap { get; set; } = 100;
-    public int HealingPoitions { get; set; }
+    public int HealingPoitions { get; set; } = 1;
     public int MaxHealth { get; set; }
     public bool tries;
 
     public Hero(int health, int strength, int spellPower, int level)
     {
         Health = health;
-        MaxHealth = health;
+        MaxHealth = 400;
         Strength = strength;
         SpellPower = spellPower;
         Level = level;
@@ -59,7 +59,10 @@ public class Hero
             //Kontroll ifall Hp på hero blir mer än vad maxhp är, då sätts Hp till Maxhp!
             if (Health > MaxHealth)
                 Health = MaxHealth;
-        }           
+
+            HealingPoitions--;
+        }
+        Console.ReadKey();
     }
 
     public void LevelUp()
