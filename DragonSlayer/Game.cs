@@ -115,8 +115,8 @@ class Game
         int randomDragon = 1;
         //random.Next(0, 3);
 
-        if (dragon.Health == 0 || dragon.Name.Contains("null"))
-        {
+        //if (dragon.Health == 0 || dragon.Name.Contains("null"))
+        //{
             if (randomDragon == 0)
             {
                 dragon = new Dragon("PoisonDragon", 100, 10, 0, hero.Level);
@@ -129,7 +129,7 @@ class Game
             {
                 dragon = new Dragon("FrostDragon", 100, 10, 0, hero.Level);
             }
-        }
+        //}
 
         //do
         //{

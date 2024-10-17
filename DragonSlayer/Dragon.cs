@@ -83,20 +83,20 @@ public class Dragon
         // Där det är 17% chans att få det.
         if (randomTurn >= 83)
         {
-            int randomFire = random.Next(0, 3);
-            if (randomFire == 0)
+            int randomFire = random.Next(1, 4);
+            if (randomFire == 1)
             {
-                Console.WriteLine($"You got burn for {randomFire + 1} turn");
+                Console.WriteLine($"You got burn for {randomFire} turn");
                 FireTicks = 1;
-            }
-            else if (randomFire == 1)
-            {
-                Console.WriteLine($"You got burn for {randomFire + 1} turns");
-                FireTicks = 2;
             }
             else if (randomFire == 2)
             {
-                Console.WriteLine($"You got burn for {randomFire + 1} turns");
+                Console.WriteLine($"You got burn for {randomFire} turns");
+                FireTicks = 2;
+            }
+            else if (randomFire == 3)
+            {
+                Console.WriteLine($"You got burn for {randomFire} turns");
                 FireTicks = 3;
             }
         }
