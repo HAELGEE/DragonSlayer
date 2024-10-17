@@ -27,7 +27,7 @@ public class Attack
             {
                 Console.Clear();
 
-                game.ShowingHeroStats();
+                game.ShowingHeroStats(hero);
 
                 Console.WriteLine("== Attack Menu ==");
                 Console.WriteLine("1.Attack");
@@ -52,10 +52,10 @@ public class Attack
                 case "2":
                     string choice = null;
                     do
-                    {
+                    {                        
                         Console.Clear();
 
-                        game.ShowingHeroStats();
+                        game.ShowingHeroStats(hero);
 
                         Console.WriteLine("== INVENTORY ==");
                         Console.WriteLine($"You currently have:");

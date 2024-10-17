@@ -10,6 +10,7 @@ namespace DragonSlayer;
 public class Hero
 {
     Attack attack = new Attack();
+    public string Class {  get; set; }
     public string Name { get; set; }
     public int Health { get; set; }
     public int Strength { get; set; }
@@ -21,10 +22,11 @@ public class Hero
     public int MaxHealth { get; set; }
     public bool tries;
 
-    public Hero(int health, int strength, int spellPower, int level)
+    public Hero(string _class, int health, int strength, int spellPower, int level)
     {
+        Class = _class;
         Health = health;
-        MaxHealth = 400;
+        MaxHealth = health;
         Strength = strength;
         SpellPower = spellPower;
         Level = level;
@@ -52,6 +54,8 @@ public class Hero
     {
         if (HealingPoitions == 0)
             Console.WriteLine("You currently have 0 HealingPotions.");
+        else if (Health == MaxHealth)
+            Console.WriteLine($"You do currently have full health");
         else
         {
             Console.WriteLine("You drank a Healing Poition and gained HP");

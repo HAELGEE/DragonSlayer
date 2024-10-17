@@ -12,7 +12,7 @@ class Game
 {
     public Color color = new Color();
     private Hero hero;
-    private List<Dragon> dragons;
+    private Dragon dragon;
     private Attack attack = new Attack();
 
     public Game()
@@ -66,18 +66,18 @@ class Game
         if (classChoice == "1")
         {
             classChoice = null;
-            Hero mage = new Hero(100, 0, 10, 1);
-            attack.AttackMenu(mage);
+            hero = new Hero("Mage", 100, 0, 10, 1);
+            attack.AttackMenu(hero);
         }
         else if (classChoice == "2")
         {
             classChoice = null;
-            Hero warrior = new Hero(100, 10, 0, 1);            
-            attack.AttackMenu(warrior);
+            hero = new Hero("Warrior", 100, 10, 0, 1);            
+            attack.AttackMenu(hero);
         }
 
     }
-    public void ShowingHeroStats()
+    public void ShowingHeroStats(Hero hero)
     {
         Console.Write($"Hero HP:");
         if (hero.Health > hero.MaxHealth * 0.6)
@@ -90,7 +90,7 @@ class Game
         Console.WriteLine($"Hero Level: {hero.Level} : Experience: {hero.Experience}/{hero.ExperienceCap}");
         
         Console.WriteLine();
-    }
+    }  
 
     public void AttackSimulator(Hero hero)
     {
@@ -101,22 +101,32 @@ class Game
         int randomDragon = random.Next(0, 3);
         if (randomDragon == 0)
         {
-            Dragon Poison = new Dragon("PoisonDragon", 10, 0, hero.Level);
+            dragon = new Dragon("PoisonDragon", 10, 0, hero.Level);
         }
         else if (randomDragon == 1)
         {
-            Dragon Fire = new Dragon("FireDragon", 0, 10, hero.Level);
+            dragon = new Dragon("FireDragon", 0, 10, hero.Level);
 
         }
         else if (randomDragon == 2)
         {
-            Dragon Frost = new Dragon("FrostDragon", 10, 0, hero.Level);
+            dragon = new Dragon("FrostDragon", 10, 0, hero.Level);
 
         }
 
+
         Console.Clear();
 
-        ShowingHeroStats();
+
+        ShowingHeroStats(hero);
+
+        if (hero.Class == "Mage")
+            attack.CastingSpell();
+        else if (hero.Class == "Warrior")
+            attack.MeleeAttack();
+
+        dragon.PoisonDamage(hero.Health);
+        
     }
 
 

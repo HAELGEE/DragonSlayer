@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonSlayer", "DragonSlayer\DragonSlayer.csproj", "{DD7C4453-9753-44F3-AA6E-2CAF9E9CB357}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonSlayer", "DragonSlayer\DragonSlayer.csproj", "{DD7C4453-9753-44F3-AA6E-2CAF9E9CB357}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorChange", "..\..\ColorChange\ColorChange\ColorChange.csproj", "{554EBCD2-CAF6-46F2-BF02-BF20FB517262}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DD7C4453-9753-44F3-AA6E-2CAF9E9CB357}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD7C4453-9753-44F3-AA6E-2CAF9E9CB357}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD7C4453-9753-44F3-AA6E-2CAF9E9CB357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{554EBCD2-CAF6-46F2-BF02-BF20FB517262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{554EBCD2-CAF6-46F2-BF02-BF20FB517262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{554EBCD2-CAF6-46F2-BF02-BF20FB517262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{554EBCD2-CAF6-46F2-BF02-BF20FB517262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
