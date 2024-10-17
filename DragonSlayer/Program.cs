@@ -10,7 +10,6 @@ internal class Program
         string choice = null;
         do
         {
-            Console.WriteLine("apa");
             Console.Clear();
             
             Console.WriteLine("Dragon slayer game");

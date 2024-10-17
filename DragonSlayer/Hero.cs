@@ -37,19 +37,19 @@ public class Hero
     }
     
 
-    public void Mage()
-    {
-        attack.CastingSpell();
-    }
-    public void Warrior()
-    {
-        attack.MeleeAttack();
-    }
+    //public void Mage()
+    //{
+    //    attack.CastingSpell();
+    //}
+    //public void Warrior()
+    //{
+    //    attack.MeleeAttack();
+    //}
 
-    public void GetHeroNameAndClass()
-    {       
+    //public void GetHeroNameAndClass()
+    //{       
         
-    }
+    //}
     public void Healing()
     {
         if (HealingPoitions == 0)

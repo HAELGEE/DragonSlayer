@@ -8,13 +8,15 @@ namespace DragonSlayer;
 public class Attack
 {
     static Game game = new Game();
+    Dragon dragon;
+
     public Attack()
     {
     }
 
     string spellCast = null;
     string meleeAttack = null;
-    
+
 
     public void AttackMenu(Hero hero)
     {
@@ -22,12 +24,13 @@ public class Attack
         do
         {
             Console.Clear();
-            
+
             do
             {
                 Console.Clear();
 
                 game.ShowingHeroStats(hero);
+                
 
                 Console.WriteLine("== Attack Menu ==");
                 Console.WriteLine("1.Attack");
@@ -52,7 +55,7 @@ public class Attack
                 case "2":
                     string choice = null;
                     do
-                    {                        
+                    {
                         Console.Clear();
 
                         game.ShowingHeroStats(hero);
@@ -83,7 +86,7 @@ public class Attack
 
     }
 
-    public void CastingSpell()
+    public void CastingSpell(Dragon dragon)
     {
         //Här kommer all attack loigik för en spellcaster att komma
         do
@@ -93,7 +96,7 @@ public class Attack
             Console.WriteLine("Attack to chose from:");
             Console.WriteLine("1.Fireball");
             Console.WriteLine("2.Ice Shard");
-            Console.Write("What spell do you want to cast?:");
+            Console.Write("What spell do you want to cast?: ");
             spellCast = Console.ReadLine();
 
             if (spellCast != "1" && spellCast != "2")
@@ -102,12 +105,24 @@ public class Attack
                 Console.ReadKey();
             }
         } while (spellCast != "1" && spellCast != "2");
+
+        Console.Clear();
+
         if (spellCast == "1")
-            Console.WriteLine($"You cast a Fireball against your Enemy");
+        {
+            Console.WriteLine($"You cast a Fireball against {dragon.Name}");
+            dragon.Health = dragon.Health - 20;
+        }
         else if (spellCast == "2")
-            Console.WriteLine($"You cast a Ice Shard agains your Enemy");
+        {
+            Console.WriteLine($"You cast a Ice Shard agains {dragon.Name}");
+            dragon.Health = dragon.Health - 20;
+        }
+        Console.WriteLine(dragon.Health);
+
+        Console.ReadKey();
     }
-    public void MeleeAttack()
+    public void MeleeAttack(Dragon dragon)
     {
         //Här kommer all attack logik från en melee att komma
         do
@@ -117,7 +132,7 @@ public class Attack
             Console.WriteLine("Attack to chose from:");
             Console.WriteLine("1.Slash, slash, slash");
             Console.WriteLine("2.Leap of Faith");
-            Console.Write("What spell do you want to cast?:");
+            Console.Write("What spell do you want to cast?: ");
             meleeAttack = Console.ReadLine();
 
             if (meleeAttack != "1" && meleeAttack != "2")
@@ -128,9 +143,20 @@ public class Attack
             }
         } while (meleeAttack != "1" && meleeAttack != "2");
 
+        Console.Clear(); 
+
         if (meleeAttack == "1")
-            Console.WriteLine($"You went up to the Dragon and slashed it 3 times.");
+        {
+            Console.WriteLine($"You went up to the {dragon.Name} and slashed it 3 times.");
+            dragon.Health = dragon.Health - 20;
+        }
         else if (meleeAttack == "2")
-            Console.WriteLine($"You jumped forward and stabbed the Dragon");
+        {
+            Console.WriteLine($"You jumped forward and stabbed {dragon.Name}");
+            dragon.Health = dragon.Health - 20;
+        }
+        Console.WriteLine(dragon.Health);
+        Console.ReadKey();
+
     }
 }

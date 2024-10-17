@@ -67,12 +67,13 @@ class Game
         {
             classChoice = null;
             hero = new Hero("Mage", 100, 0, 10, 1);
+            
             attack.AttackMenu(hero);
         }
         else if (classChoice == "2")
         {
             classChoice = null;
-            hero = new Hero("Warrior", 100, 10, 0, 1);            
+            hero = new Hero("Warrior", 100, 10, 0, 1);
             attack.AttackMenu(hero);
         }
 
@@ -88,45 +89,82 @@ class Game
             color.ColorYellow(hero.Health);
 
         Console.WriteLine($"Hero Level: {hero.Level} : Experience: {hero.Experience}/{hero.ExperienceCap}");
-        
+
         Console.WriteLine();
-    }  
+    }
+
+    public void ShowingDragonStats(Dragon dragon)
+    {
+        Console.Write($"Dragon HP:");
+        if (dragon.Health > dragon.MaxHealth * 0.6)
+            color.ColorGreen(dragon.Health);
+        else if (dragon.Health < dragon.MaxHealth * 0.31)
+            color.ColorRed(dragon.Health);
+        else
+            color.ColorYellow(dragon.Health);
+
+        Console.WriteLine();
+    }
 
     public void AttackSimulator(Hero hero)
-    {
+    {        
         //Här kommer attack simulationen mellan drake och hero komma
 
         // Kontrollera vilken utav drakarna man möter
         Random random = new Random();
-        int randomDragon = random.Next(0, 3);
-        if (randomDragon == 0)
+        int randomDragon = 1;
+        //random.Next(0, 3);
+
+        if (dragon.Health == 0 || dragon.Name.Contains("null"))
         {
-            dragon = new Dragon("PoisonDragon", 10, 0, hero.Level);
+            if (randomDragon == 0)
+            {
+                dragon = new Dragon("PoisonDragon", 100, 10, 0, hero.Level);
+            }
+            else if (randomDragon == 1)
+            {
+                dragon = new Dragon("FireDragon", 100, 0, 10, hero.Level);
+            }
+            else if (randomDragon == 2)
+            {
+                dragon = new Dragon("FrostDragon", 100, 10, 0, hero.Level);
+            }
         }
-        else if (randomDragon == 1)
-        {
-            dragon = new Dragon("FireDragon", 0, 10, hero.Level);
 
-        }
-        else if (randomDragon == 2)
-        {
-            dragon = new Dragon("FrostDragon", 10, 0, hero.Level);
-
-        }
+        //do
+        //{
+            Console.Clear();
 
 
-        Console.Clear();
+            ShowingHeroStats(hero);
+            ShowingDragonStats(dragon);
+
+            if (hero.Class == "Mage")
+                attack.CastingSpell(dragon);
+            else if (hero.Class == "Warrior")
+                attack.MeleeAttack(dragon);
+
+            if (dragon.Name.Contains("Poison"))
+                Console.WriteLine();
+
+            else if (dragon.Name.Contains("Fire"))
+                dragon.FireDamage(hero);
+
+            else if (dragon.Name.Contains("Frost"))
+                Console.WriteLine();
 
 
-        ShowingHeroStats(hero);
+            if (hero.Health <= 0)
+                Console.WriteLine($"You died");
+            else if (dragon.Health <= 0)
+            {
+                hero.Experience += 25;
+                Console.WriteLine($"You killed a {dragon.Name}");
+                Console.WriteLine($"Gained 25 Experience");
+            }
 
-        if (hero.Class == "Mage")
-            attack.CastingSpell();
-        else if (hero.Class == "Warrior")
-            attack.MeleeAttack();
-
-        dragon.PoisonDamage(hero.Health);
-        
+            Console.ReadKey();
+        //} while (hero.Health !<= 0 || dragon.Health !<= 0);
     }
 
 
