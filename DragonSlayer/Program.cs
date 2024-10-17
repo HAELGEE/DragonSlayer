@@ -5,13 +5,13 @@ internal class Program
     public static bool tries = true;
     static void Main(string[] args)
     {
-        Game game = new Game();
-
+        Game game = new Game();        
+        
         string choice = null;
         do
         {
             Console.Clear();
-
+            
             Console.WriteLine("Dragon slayer game");
             Console.WriteLine("1.New Game");
             Console.WriteLine("2.Load Game");
