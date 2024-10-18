@@ -4,7 +4,7 @@ internal class Program
 {
     public static bool tries = true;
     static void Main(string[] args)
-    {
+   {
         Game game = new Game();        
         
         string choice = null;

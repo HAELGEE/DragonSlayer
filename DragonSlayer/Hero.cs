@@ -21,6 +21,7 @@ public class Hero
     public int HealingPoitions { get; set; } = 1;
     public int MaxHealth { get; set; }
     public bool tries;
+    public bool isAlive = true;
 
     public Hero(string _class, int health, int strength, int spellPower, int level)
     {
@@ -36,20 +37,6 @@ public class Hero
         Name = name;
     }
     
-
-    //public void Mage()
-    //{
-    //    attack.CastingSpell();
-    //}
-    //public void Warrior()
-    //{
-    //    attack.MeleeAttack();
-    //}
-
-    //public void GetHeroNameAndClass()
-    //{       
-        
-    //}
     public void Healing()
     {
         if (HealingPoitions == 0)
@@ -59,7 +46,7 @@ public class Hero
         else
         {
             Console.WriteLine("You drank a Healing Poition and gained HP");
-            Health += 150;
+            Health += 80;
             //Kontroll ifall Hp på hero blir mer än vad maxhp är, då sätts Hp till Maxhp!
             if (Health > MaxHealth)
                 Health = MaxHealth;
@@ -69,8 +56,21 @@ public class Hero
         Console.ReadKey();
     }
 
-    public void LevelUp()
+    public void ExperienceCapCheck()
     {
         ExperienceCap = Level * 100;
+    }
+    public void CheckLevelUp(Hero hero)
+    {
+        if (hero.Class == "Warrior")
+        {
+            if (hero.Experience == hero.ExperienceCap)
+                Console.WriteLine($"Level up! You gained increased strength");
+        }
+        else
+        {
+            if (hero.Experience == hero.ExperienceCap)
+                Console.WriteLine($"Level up! You gained increased spell power");
+        }
     }
 }

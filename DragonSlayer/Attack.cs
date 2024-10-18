@@ -8,7 +8,8 @@ namespace DragonSlayer;
 public class Attack
 {
     static Game game = new Game();
-    Dragon dragon;
+    public Random random = new Random();
+    
 
     public Attack()
     {
@@ -16,79 +17,17 @@ public class Attack
 
     string spellCast = null;
     string meleeAttack = null;
+    public int Poison { get; set; }
+    public int PoisonTicks { get; set; }
+    public int Fire { get; set; }
+    public int FireTicks { get; set; }
 
 
-    public void AttackMenu(Hero hero)
-    {
-        string attackmenuChoice = null;
-        do
-        {
-            Console.Clear();
-
-            do
-            {
-                Console.Clear();
-
-                game.ShowingHeroStats(hero);
-                
-
-                Console.WriteLine("== Attack Menu ==");
-                Console.WriteLine("1.Attack");
-                Console.WriteLine("2.Items");
-                Console.WriteLine("3.Run away");
-                attackmenuChoice = Console.ReadLine();
-
-                if (attackmenuChoice != "1" && attackmenuChoice != "2" && attackmenuChoice != "3")
-                {
-                    Console.WriteLine("Invalid input, try again!");
-                    Console.ReadKey();
-                }
-
-            } while (attackmenuChoice != "1" && attackmenuChoice != "2" && attackmenuChoice != "3");
-
-            switch (attackmenuChoice)
-            {
-                case "1":
-                    game.AttackSimulator(hero);
-                    break;
-
-                case "2":
-                    string choice = null;
-                    do
-                    {
-                        Console.Clear();
-
-                        game.ShowingHeroStats(hero);
-
-                        Console.WriteLine("== INVENTORY ==");
-                        Console.WriteLine($"You currently have:");
-                        Console.WriteLine($"1.Healing Poitions: {hero.HealingPoitions}");
-                        Console.WriteLine();
-                        Console.WriteLine($"2.Back");
-                        Console.WriteLine();
-                        Console.WriteLine("What do you want to use?");
-                        choice = Console.ReadLine();
-
-                        if (choice == "1")
-                            hero.Healing();
-                        else if (choice == "2")
-                            break;
-
-                    } while (choice != "1" && choice != "2");
-                    break;
-
-                case "3":
-                    Console.WriteLine("You ran away like a chicken you are!");
-                    Console.ReadLine();
-                    break;
-            }
-        } while (attackmenuChoice != "3");
-
-    }
 
     public void CastingSpell(Dragon dragon)
     {
         //Här kommer all attack loigik för en spellcaster att komma
+        int randomDamage = random.Next(10, 21);
         do
         {
             Console.Clear();
@@ -110,20 +49,22 @@ public class Attack
 
         if (spellCast == "1")
         {
-            Console.WriteLine($"You cast a Fireball against {dragon.Name}");
-            dragon.Health = dragon.Health - 20;
+            Console.WriteLine($"You cast a Fireball against {Dragon._dragon.Name}");
+            Dragon._dragon.Health = Dragon._dragon.Health - randomDamage;
         }
         else if (spellCast == "2")
         {
-            Console.WriteLine($"You cast a Ice Shard agains {dragon.Name}");
-            dragon.Health = dragon.Health - 20;
+            Console.WriteLine($"You cast a Ice Shard against {Dragon._dragon.Name}");
+            Dragon._dragon.Health = Dragon._dragon.Health - randomDamage;
         }
-        Console.WriteLine(dragon.Health);
-
+        
         Console.ReadKey();
+
+       // return Dragon._dragon.Health;
     }
     public void MeleeAttack(Dragon dragon)
     {
+        int randomDamage = random.Next(10, 21);
         //Här kommer all attack logik från en melee att komma
         do
         {
@@ -132,7 +73,7 @@ public class Attack
             Console.WriteLine("Attack to chose from:");
             Console.WriteLine("1.Slash, slash, slash");
             Console.WriteLine("2.Leap of Faith");
-            Console.Write("What spell do you want to cast?: ");
+            Console.Write("What attack do you want to attack with?: ");
             meleeAttack = Console.ReadLine();
 
             if (meleeAttack != "1" && meleeAttack != "2")
@@ -147,16 +88,117 @@ public class Attack
 
         if (meleeAttack == "1")
         {
-            Console.WriteLine($"You went up to the {dragon.Name} and slashed it 3 times.");
-            dragon.Health = dragon.Health - 20;
+            Console.WriteLine($"You went up to the {Dragon._dragon.Name} and slashed it 3 times.");
+            Dragon._dragon.Health = Dragon._dragon.Health - randomDamage;
         }
         else if (meleeAttack == "2")
         {
-            Console.WriteLine($"You jumped forward and stabbed {dragon.Name}");
-            dragon.Health = dragon.Health - 20;
+            Console.WriteLine($"You jumped forward and stabbed {Dragon._dragon.Name}");
+            Dragon._dragon.Health = Dragon._dragon.Health - randomDamage;
         }
-        Console.WriteLine(dragon.Health);
+        
         Console.ReadKey();
+    }
+    public int PoisonDamage(Hero hero)
+    {
+        // Lägga in logik för poison
+        // Lägger in Poison attack som Poisondrakar han en chans att lägga på Hero vid varje försök till attack
+        // -10 för varje poison tick i Max 3 rundor
+        Random random = new Random();
+        int randomTurn = random.Next(0, 101);
+        int randomDamage = random.Next(10, 21);
 
+        Console.WriteLine($"The PoisonDragon spits acid on you");
+        hero.Health = hero.Health - randomDamage;
+
+        // Här kommer en procent logik för att se om man får Poison eller inte
+        // Där det är 17% chans att få det.
+        if (randomTurn >= 83)
+        {
+            int randomPoison = random.Next(1, 4);
+            if (randomPoison == 1)
+            {
+                Console.WriteLine($"You got poisoned for {randomPoison} turn");
+                PoisonTicks = 1;
+            }
+            else if (randomPoison == 2)
+            {
+                Console.WriteLine($"You got poisoned for {randomPoison} turns");
+                PoisonTicks = 2;
+            }
+            else if (randomPoison == 3)
+            {
+                Console.WriteLine($"You got poisoned for {randomPoison} turns");
+                PoisonTicks = 3;
+            }
+        }
+
+        // Om det finns Poison tick så slängs "10" in i Poison som Poisondmg
+        if (PoisonTicks > 0)
+        {
+            Console.WriteLine($"You got poisoned and lost 10 Health");
+            hero.Health = hero.Health - 10;
+            PoisonTicks--;
+        }
+        
+        return hero.Health;
+    }
+    public int FireDamage(Hero hero)
+    {
+        // Lägga in logik för fire
+        // Lägger in Burn attack så Firedrakar han en chans att lägga på Hero vid varje försök till attack
+        // -10 för varje burn tick i Max 3 rundor
+        Random random = new Random();
+        int randomTurn = random.Next(0, 101);
+        int randomDamage = random.Next(10, 21);
+
+        Console.WriteLine($"The FireDragon did a huge breath and blew out large Flames of fire on you");
+        hero.Health = hero.Health - randomDamage;
+
+        // Här kommer en procent logik för att se om man får Burn eller inte
+        // Där det är 17% chans att få det.
+        if (randomTurn >= 83)
+        {
+            int randomFire = random.Next(1, 4);
+            if (randomFire == 1)
+            {
+                Console.WriteLine($"You got burn for {randomFire} turn");
+                FireTicks = 1;
+            }
+            else if (randomFire == 2)
+            {
+                Console.WriteLine($"You got burn for {randomFire} turns");
+                FireTicks = 2;
+            }
+            else if (randomFire == 3)
+            {
+                Console.WriteLine($"You got burn for {randomFire} turns");
+                FireTicks = 3;
+            }
+        }
+
+        // Om det finns Burn tick så slängs "10" in i Burn som Burndmg
+        if (FireTicks > 0)
+        {
+            Console.WriteLine($"You got burned and lost 10 Health");
+            hero.Health = hero.Health - 10;
+            FireTicks--;
+        }
+
+        // Returnerar Burn, 20 om BurnTick är större än 0 annars returneras 0
+        return hero.Health;
+    }
+    public int FrostDamage(Hero hero)
+    {
+        // Lägga in logik för fire
+        // Lägga in poison attack som drakar han en chans att lägga på Hero vid varje försök till attack
+        // -20 för varje burn tick i Max 3 rundor
+        Random random = new Random();
+        int randomDamage = random.Next(10, 21);
+
+        Console.WriteLine($"The FrostDragon blew freezing air and damaged you");
+        hero.Health = hero.Health - randomDamage;
+
+        return hero.Health;
     }
 }
