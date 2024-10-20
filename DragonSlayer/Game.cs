@@ -16,6 +16,8 @@ class Game
 
     double dragonsToSlain { get; set; }
 
+    public bool GameWon = false;
+
     public Game()
     {
     }
@@ -139,7 +141,30 @@ class Game
         {
             if (dragonsToSlain == 0)
             {
-                Console.WriteLine("All dragons are slained, the Boss Dragon is now Approching");
+                Console.Clear();
+
+                Console.WriteLine("All the minion dragons are slained");
+                Console.ReadKey();
+
+                Console.Clear();
+
+                Console.WriteLine($"BEWARE!");
+                Thread.Sleep(500);
+                Console.Clear();
+                Thread.Sleep(500);
+                Console.WriteLine($"BEWARE!");
+                Thread.Sleep(500);
+                Console.Clear();
+                Thread.Sleep(500);
+                Console.WriteLine($"BEWARE!");
+                Thread.Sleep(500);
+                Console.Clear();
+                Thread.Sleep(500);
+                Console.WriteLine($"BEWARE!");
+                Thread.Sleep(500);
+                Console.WriteLine($"The boss is approaching");
+                Thread.Sleep(2000);
+                GameWon = true;
                 break;
             }
             else if (hero.Health <= 0)
@@ -157,29 +182,31 @@ class Game
 
                     // Om man har besegrat en drake så skall en ny spawna tills alla drakar är döda
                     // Och om Hero går upp i level skall även drakarna göra det.
+
                     if (dragonsToSlain > 0)
                     {
                         if (Dragon._dragon.Health <= 0)
                             Dragon.RandomDragon(hero);
-                        else
+
+                        hero.ExperienceCapCheck();
+                        hero.CheckLevelUp(hero);
+
+                        Console.WriteLine(Dragon._dragon.Name);
+                        ShowingDragonStats(Dragon._dragon);
+                        Console.WriteLine($"Dragons left to Slain {dragonsToSlain}\n");
+
+                        ShowingHeroStats(hero);
+
+                        Console.WriteLine("== Attack Menu ==");
+                        Console.WriteLine("1.Attack");
+                        Console.WriteLine("2.Items");
+                        Console.WriteLine("3.Run away");
+                        attackmenuChoice = Console.ReadLine();
+
+                        if (attackmenuChoice != "1" && attackmenuChoice != "2" && attackmenuChoice != "3")
                         {
-                            Console.WriteLine(Dragon._dragon.Name);
-                            ShowingDragonStats(Dragon._dragon);
-                            Console.WriteLine($"Dragons left to Slain {dragonsToSlain}\n");
-
-                            ShowingHeroStats(hero);
-
-                            Console.WriteLine("== Attack Menu ==");
-                            Console.WriteLine("1.Attack");
-                            Console.WriteLine("2.Items");
-                            Console.WriteLine("3.Run away");
-                            attackmenuChoice = Console.ReadLine();
-
-                            if (attackmenuChoice != "1" && attackmenuChoice != "2" && attackmenuChoice != "3")
-                            {
-                                Console.WriteLine("Invalid input, try again!");
-                                Console.ReadKey();
-                            }
+                            Console.WriteLine("Invalid input, try again!");
+                            Console.ReadKey();
                         }
                     }
                     else
@@ -238,11 +265,8 @@ class Game
     public void AttackSimulator(Hero hero)
     {
         //Här kommer attack simulationen mellan drake och hero komma
-        hero.ExperienceCapCheck();
-        hero.CheckLevelUp(hero);
 
         Console.Clear();
-
 
         ShowingHeroStats(hero);
         ShowingDragonStats(Dragon._dragon);
