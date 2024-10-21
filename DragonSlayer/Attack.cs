@@ -68,8 +68,8 @@ public class Attack
 
             if (SpellDotTick > 0)
             {
-                Console.WriteLine($"{Dragon.MinionDragons.Name} took {spellDotDamage - 35} damage from Burn");
-                Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - (spellDotDamage - 35);
+                Console.WriteLine($"{Dragon.MinionDragons.Name} took {spellDotDamage + 35} damage from Burn");
+                Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - (spellDotDamage + 35);
                 SpellDotTick--;
             }
         }
@@ -86,8 +86,8 @@ public class Attack
 
             if (SpellDotTick > 0)
             {
-                Console.WriteLine($"{Dragon.MinionDragons.Name} and took {spellDotDamage - 35} damage from FrostBite");
-                Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - (spellDotDamage - 35);
+                Console.WriteLine($"{Dragon.MinionDragons.Name} and took {spellDotDamage + 35} damage from FrostBite");
+                Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - (spellDotDamage + 35);
                 SpellDotTick--;
             }
         }
@@ -135,8 +135,8 @@ public class Attack
 
             if (SpellDotTick > 0)
             {
-                Console.WriteLine($"{Boss.DragonBoss.Name} took {spellDotDamage - 35} damage from Burn");
-                Boss.DragonBoss.Health = Boss.DragonBoss.Health - (spellDotDamage - 35);
+                Console.WriteLine($"{Boss.DragonBoss.Name} took {spellDotDamage + 35} damage from Burn");
+                Boss.DragonBoss.Health = Boss.DragonBoss.Health - (spellDotDamage + 35);
                 SpellDotTick--;
             }
         }
@@ -153,8 +153,8 @@ public class Attack
 
             if (SpellDotTick > 0)
             {
-                Console.WriteLine($"{Boss.DragonBoss.Name} and took {spellDotDamage - 35} damage from FrostBite");
-                Boss.DragonBoss.Health = Boss.DragonBoss.Health - (spellDotDamage - 35);
+                Console.WriteLine($"{Boss.DragonBoss.Name} and took {spellDotDamage + 35} damage from FrostBite");
+                Boss.DragonBoss.Health = Boss.DragonBoss.Health - (spellDotDamage + 35);
                 SpellDotTick--;
             }
         }

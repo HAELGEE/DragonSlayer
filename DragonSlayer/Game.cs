@@ -361,9 +361,6 @@ class Game
 
         Console.Clear();
 
-        ShowingHeroStats(hero);
-        ShowingDragonStats(Dragon.MinionDragons);
-
         // Kontrollerar vilken klass Hero har
         if (hero.Class == "Mage")
             attack.CastingSpell(hero);
