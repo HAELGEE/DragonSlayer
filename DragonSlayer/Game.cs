@@ -69,12 +69,12 @@ class Game
         if (classChoice == "1")
         {
             classChoice = null;
-            hero = new Hero("Mage", 100, 0, 10, 1);
+            hero = new Hero("Mage", 1000, 0, 10, 1);
         }
         else if (classChoice == "2")
         {
             classChoice = null;
-            hero = new Hero("Warrior", 100, 10, 0, 1);
+            hero = new Hero("Warrior", 1000, 10, 0, 1);
         }
 
 
@@ -92,9 +92,8 @@ class Game
                     Console.ReadKey();
                 }
                 else
-                {
                     break;
-                }
+
             }
             catch (Exception)
             {
@@ -124,12 +123,22 @@ class Game
     public void ShowingDragonStats(Dragon Dragon)
     {
         Console.Write($"Dragon HP:");
-        if (Dragon._dragon.Health > Dragon._dragon.MaxHealth * 0.6)
-            color.ColorGreen(Dragon._dragon.Health);
-        else if (Dragon._dragon.Health < Dragon._dragon.MaxHealth * 0.31)
-            color.ColorRed(Dragon._dragon.Health);
+        if (Dragon.MinionDragons.Health > Dragon.MinionDragons.MaxHealth * 0.6)
+            color.ColorGreen(Dragon.MinionDragons.Health);
+        else if (Dragon.MinionDragons.Health < Dragon.MinionDragons.MaxHealth * 0.31)
+            color.ColorRed(Dragon.MinionDragons.Health);
         else
-            color.ColorYellow(Dragon._dragon.Health);
+            color.ColorYellow(Dragon.MinionDragons.Health);
+    }
+    public void ShowingBossStats(Boss boss)
+    {
+        Console.Write($"Dragon HP:");
+        if (Boss.DragonBoss.Health > Boss.DragonBoss.MaxHealth * 0.6)
+            color.ColorGreen(Boss.DragonBoss.Health);
+        else if (Boss.DragonBoss.Health < Boss.DragonBoss.MaxHealth * 0.31)
+            color.ColorRed(Boss.DragonBoss.Health);
+        else
+            color.ColorYellow(Boss.DragonBoss.Health);
     }
 
     public void AttackMenu()
@@ -164,7 +173,85 @@ class Game
                 Thread.Sleep(500);
                 Console.WriteLine($"The boss is approaching");
                 Thread.Sleep(2000);
-                GameWon = true;
+
+                Boss.BossCreator(hero);
+
+                do
+                {
+                    if (hero.Health <= 0)
+                    {
+                        Console.WriteLine("You died, better luck next time");
+                        hero.isAlive = false;
+                    }
+                    else if (Boss.DragonBoss.Health <= 0)
+                    {
+                        Console.WriteLine($"{Boss.DragonBoss.Name} died, You Won!");
+                        gameOn = false;
+                    }
+                    else
+                    {
+                        hero.ExperienceCapCheck();
+                        hero.CheckLevelUp(hero);
+                        Console.Clear();
+
+                        Console.WriteLine(Boss.DragonBoss.Name);
+                        ShowingBossStats(Boss.DragonBoss);
+
+                        ShowingHeroStats(hero);
+
+                        Console.WriteLine("== Attack Menu ==");
+                        Console.WriteLine("1.Attack");
+                        Console.WriteLine("2.Items");
+                        Console.WriteLine("3.Run away");
+                        attackmenuChoice = Console.ReadLine();
+
+                        if (attackmenuChoice != "1" && attackmenuChoice != "2" && attackmenuChoice != "3")
+                        {
+                            Console.WriteLine("Invalid input, try again!");
+                            Console.ReadKey();
+                        }
+
+                        if (Boss.DragonBoss.Health > 0)
+                        {
+                            switch (attackmenuChoice)
+                            {
+                                case "1":
+
+                                    AttackSimulatorBoss(hero);
+                                    break;
+
+                                case "2":
+                                    string choice = null;
+                                    do
+                                    {
+                                        Console.Clear();
+
+                                        ShowingHeroStats(hero);
+
+                                        Console.WriteLine("== INVENTORY ==");
+                                        Console.WriteLine($"You currently have:");
+                                        Console.WriteLine($"1.Healing Poitions: {hero.HealingPoitions}");
+                                        Console.WriteLine();
+                                        Console.WriteLine($"2.Back");
+                                        Console.WriteLine();
+                                        Console.WriteLine("What do you want to use?");
+                                        choice = Console.ReadLine();
+
+                                        if (choice == "1")
+                                            hero.Healing();
+                                        else if (choice == "2")
+                                            break;
+
+                                    } while (choice != "2");
+                                    break;
+                            }
+                        }
+                        else
+                            break;
+                    }
+
+                } while (hero.Health != 0 || Boss.DragonBoss.Health != 0);
+
                 break;
             }
             else if (hero.Health <= 0)
@@ -185,14 +272,15 @@ class Game
 
                     if (dragonsToSlain > 0)
                     {
-                        if (Dragon._dragon.Health <= 0)
+                        if (Dragon.MinionDragons.Health <= 0)
                             Dragon.RandomDragon(hero);
 
                         hero.ExperienceCapCheck();
                         hero.CheckLevelUp(hero);
+                        Console.Clear();
 
-                        Console.WriteLine(Dragon._dragon.Name);
-                        ShowingDragonStats(Dragon._dragon);
+                        Console.WriteLine(Dragon.MinionDragons.Name);
+                        ShowingDragonStats(Dragon.MinionDragons);
                         Console.WriteLine($"Dragons left to Slain {dragonsToSlain}\n");
 
                         ShowingHeroStats(hero);
@@ -212,7 +300,7 @@ class Game
                     else
                         break;
 
-                    if (Dragon._dragon.Health > 0)
+                    if (Dragon.MinionDragons.Health > 0)
                     {
                         switch (attackmenuChoice)
                         {
@@ -256,7 +344,7 @@ class Game
                     else
                         break;
 
-                } while (Dragon._dragon.Health <= 0 || hero.Health <= 0);
+                } while (Dragon.MinionDragons.Health <= 0 || hero.Health <= 0);
                 //} while (attackmenuChoice != "1" || attackmenuChoice != "2" || attackmenuChoice != "3");
             }
         } while (attackmenuChoice != "3" || dragonsToSlain != 0 || hero.isAlive == true || gameOn == true);
@@ -269,13 +357,13 @@ class Game
         Console.Clear();
 
         ShowingHeroStats(hero);
-        ShowingDragonStats(Dragon._dragon);
+        ShowingDragonStats(Dragon.MinionDragons);
 
         // Kontrollerar vilken klass Hero har
         if (hero.Class == "Mage")
-            attack.CastingSpell(Dragon._dragon);
+            attack.CastingSpell(hero);
         else if (hero.Class == "Warrior")
-            attack.MeleeAttack(Dragon._dragon);
+            attack.MeleeAttack(hero);
 
         // Om hero har 0 hp ska det sluta
         if (hero.Health <= 0)
@@ -285,23 +373,69 @@ class Game
             hero.isAlive = false;
         }
         // Om drake har 0 hp, gå vidare till nästa drake 
-        else if (Dragon._dragon.Health <= 0)
+        else if (Dragon.MinionDragons.Health <= 0)
         {
             dragonsToSlain--;
             hero.Experience += 25;
-            Console.WriteLine($"You killed a {Dragon._dragon.Name}");
+            Console.WriteLine($"You killed a {Dragon.MinionDragons.Name}");
             Console.WriteLine($"Gained 25 Experience");
         }
         else
         {
             // Kontrollerar vilken typ av drake
-            if (Dragon._dragon.Name.Contains("Poison"))
+            if (Dragon.MinionDragons.Name.Contains("Poison"))
                 attack.PoisonDamage(hero);
 
-            else if (Dragon._dragon.Name.Contains("Fire"))
+            else if (Dragon.MinionDragons.Name.Contains("Fire"))
                 attack.FireDamage(hero);
 
-            else if (Dragon._dragon.Name.Contains("Frost"))
+            else if (Dragon.MinionDragons.Name.Contains("Frost"))
+                attack.FrostDamage(hero);
+        }
+
+        Console.ReadKey();
+    }
+    public void AttackSimulatorBoss(Hero hero)
+    {
+        //Här kommer attack simulationen mellan Boss och Hero komma
+
+        Console.Clear();
+
+        ShowingHeroStats(hero);
+        ShowingBossStats(Boss.DragonBoss);
+
+
+        // Kontrollerar vilken klass Hero har
+        if (hero.Class == "Mage")
+            attack.CastingSpellAgainstBoss(hero);
+        else if (hero.Class == "Warrior")
+            attack.MeleeAttackAgainstBoss(hero);
+
+        // Om hero har 0 hp ska det sluta
+        if (hero.Health <= 0)
+        {
+            Console.WriteLine($"You died, better luck next time");
+            Console.ReadKey();
+            hero.isAlive = false;
+        }
+        // Om drake har 0 hp, Game WON
+        else if (Boss.DragonBoss.Health <= 0)
+        {
+            GameWon = true;
+
+        }
+        else
+        {
+            // Kontrollerar vilken typ av spell Boss skall använda
+            Random random = new Random();
+            int randomSpell = random.Next(0, 3);
+            if (randomSpell == 0)
+                attack.PoisonDamage(hero);
+
+            else if (randomSpell == 1)
+                attack.FireDamage(hero);
+
+            else if (randomSpell == 0)
                 attack.FrostDamage(hero);
         }
 

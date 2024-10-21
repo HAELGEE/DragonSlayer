@@ -37,11 +37,13 @@ internal class Program
                                 value = Console.ReadLine();
                                 if (value == "1")
                                 {
+                                    game.GameWon = false;
                                     tries = true;
                                     game.GameLogic();
                                 }
                                 else if(value == "2")
                                 {
+                                    game.GameWon = false;
                                     tries = true;
                                     Console.WriteLine("Good luck next time!");
                                     break;

@@ -65,12 +65,38 @@ public class Hero
         if (hero.Class == "Warrior")
         {
             if (hero.Experience == hero.ExperienceCap)
+            {
                 Console.WriteLine($"Level up! You gained increased strength");
+                hero.Level++;
+                hero.Experience = 0;
+
+                // För varje level upp, öka styrka och health
+                if (hero.Level > 1)
+                {
+                    hero.SpellPower = hero.SpellPower + 2;
+                    hero.Health = hero.Health + 120;
+                }
+
+                Console.ReadKey();
+            }
         }
         else
         {
             if (hero.Experience == hero.ExperienceCap)
+            {
                 Console.WriteLine($"Level up! You gained increased spell power");
+                hero.Level++;
+                hero.Experience = 0;
+
+                // För varje level upp, öka styrka och health
+                if (hero.Level > 1)
+                {
+                    hero.Strength = hero.Strength + 2;
+                    hero.Health = hero.Health + 120;
+                }
+
+                Console.ReadKey();
+            }
         }
     }
 }

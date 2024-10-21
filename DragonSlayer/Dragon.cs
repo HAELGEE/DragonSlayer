@@ -17,7 +17,7 @@ public class Dragon
     public int Level { get; set; }
     
 
-    public static Dragon _dragon {  get; set; }
+    public static Dragon MinionDragons {  get; set; }
 
     public Dragon(string name, int health, int strength, int spellPower, int level)
     {
@@ -36,11 +36,11 @@ public class Dragon
         int randomDragon = random.Next(0, 3);
 
         if (randomDragon == 0)
-            _dragon = new Dragon("FrostDragon", 1, 1, 0, hero.Level);
+            MinionDragons = new Dragon("FrostDragon", 800, 10, 0, hero.Level);
         else if (randomDragon == 1)
-            _dragon = new Dragon("FireDragon", 1, 1, 0, hero.Level);
+            MinionDragons = new Dragon("FireDragon", 800, 10, 0, hero.Level);
         else if (randomDragon == 2)
-            _dragon = new Dragon("PoisonDragon", 1, 1, 0, hero.Level);
+            MinionDragons = new Dragon("PoisonDragon", 800, 10, 0, hero.Level);
     }
 
 
