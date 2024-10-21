@@ -14,7 +14,7 @@ class Game
     private Hero hero;
     private Attack attack = new Attack();
 
-    double dragonsToSlain { get; set; }
+    public double dragonsToSlain { get; set; }
 
     public bool GameWon = false;
 
@@ -77,7 +77,6 @@ class Game
             hero = new Hero("Warrior", 1000, 10, 0, 1);
         }
 
-
         do
         {
             try
@@ -93,7 +92,6 @@ class Game
                 }
                 else
                     break;
-
             }
             catch (Exception)
             {
@@ -119,7 +117,6 @@ class Game
 
         Console.WriteLine();
     }
-
     public void ShowingDragonStats(Dragon Dragon)
     {
         Console.Write($"Dragon HP:");
@@ -182,11 +179,13 @@ class Game
                     {
                         Console.WriteLine("You died, better luck next time");
                         hero.isAlive = false;
+                        break;
                     }
                     else if (Boss.DragonBoss.Health <= 0)
                     {
                         Console.WriteLine($"{Boss.DragonBoss.Name} died, You Won!");
                         gameOn = false;
+                        break;
                     }
                     else
                     {
@@ -269,77 +268,83 @@ class Game
 
                     // Om man har besegrat en drake så skall en ny spawna tills alla drakar är döda
                     // Och om Hero går upp i level skall även drakarna göra det.
-
-                    if (dragonsToSlain > 0)
+                    if (hero.Health > 0)
                     {
-                        if (Dragon.MinionDragons.Health <= 0)
-                            Dragon.RandomDragon(hero);
 
-                        hero.ExperienceCapCheck();
-                        hero.CheckLevelUp(hero);
-                        Console.Clear();
+                        if (dragonsToSlain > 0)
+                        {
+                            if (Dragon.MinionDragons.Health <= 0)
+                                Dragon.RandomDragon(hero);
 
-                        Console.WriteLine(Dragon.MinionDragons.Name);
-                        ShowingDragonStats(Dragon.MinionDragons);
-                        Console.WriteLine($"Dragons left to Slain {dragonsToSlain}\n");
 
-                        ShowingHeroStats(hero);
+                            hero.ExperienceCapCheck();
+                            hero.CheckLevelUp(hero);
+                            Console.Clear();
 
-                        Console.WriteLine("== Attack Menu ==");
-                        Console.WriteLine("1.Attack");
-                        Console.WriteLine("2.Items");
-                        Console.WriteLine("3.Run away");
-                        attackmenuChoice = Console.ReadLine();
+                            Console.WriteLine(Dragon.MinionDragons.Name);
+                            ShowingDragonStats(Dragon.MinionDragons);
+                            Console.WriteLine($"Dragons left to Slain {dragonsToSlain}\n");
+
+                            ShowingHeroStats(hero);
+
+                            Console.WriteLine("== Attack Menu ==");
+                            Console.WriteLine("1.Attack");
+                            Console.WriteLine("2.Items");
+                            Console.WriteLine("3.Run away");
+                            attackmenuChoice = Console.ReadLine();
+                        }
+                        else
+                            break;
 
                         if (attackmenuChoice != "1" && attackmenuChoice != "2" && attackmenuChoice != "3")
                         {
                             Console.WriteLine("Invalid input, try again!");
                             Console.ReadKey();
                         }
-                    }
-                    else
-                        break;
 
-                    if (Dragon.MinionDragons.Health > 0)
-                    {
-                        switch (attackmenuChoice)
+                        if (Dragon.MinionDragons.Health > 0)
                         {
-                            case "1":
+                            switch (attackmenuChoice)
+                            {
+                                case "1":
 
-                                AttackSimulator(hero);
-                                break;
+                                    AttackSimulator(hero);
+                                    break;
 
-                            case "2":
-                                string choice = null;
-                                do
-                                {
-                                    Console.Clear();
+                                case "2":
+                                    string choice = null;
+                                    do
+                                    {
+                                        Console.Clear();
 
-                                    ShowingHeroStats(hero);
+                                        ShowingHeroStats(hero);
 
-                                    Console.WriteLine("== INVENTORY ==");
-                                    Console.WriteLine($"You currently have:");
-                                    Console.WriteLine($"1.Healing Poitions: {hero.HealingPoitions}");
-                                    Console.WriteLine();
-                                    Console.WriteLine($"2.Back");
-                                    Console.WriteLine();
-                                    Console.WriteLine("What do you want to use?");
-                                    choice = Console.ReadLine();
+                                        Console.WriteLine("== INVENTORY ==");
+                                        Console.WriteLine($"You currently have:");
+                                        Console.WriteLine($"1.Healing Poitions: {hero.HealingPoitions}");
+                                        Console.WriteLine();
+                                        Console.WriteLine($"2.Back");
+                                        Console.WriteLine();
+                                        Console.WriteLine("What do you want to use?");
+                                        choice = Console.ReadLine();
 
-                                    if (choice == "1")
-                                        hero.Healing();
-                                    else if (choice == "2")
-                                        break;
+                                        if (choice == "1")
+                                            hero.Healing();
+                                        else if (choice == "2")
+                                            break;
 
-                                } while (choice != "2");
-                                break;
+                                    } while (choice != "2");
+                                    break;
 
-                            case "3":
-                                Console.WriteLine("You ran away like a chicken you are!");
-                                Console.ReadLine();
-                                gameOn = false;
-                                break;
+                                case "3":
+                                    Console.WriteLine("You ran away like a chicken you are!");
+                                    Console.ReadLine();
+                                    gameOn = false;
+                                    break;
+                            }
                         }
+                        else
+                            break;
                     }
                     else
                         break;
@@ -375,6 +380,14 @@ class Game
         // Om drake har 0 hp, gå vidare till nästa drake 
         else if (Dragon.MinionDragons.Health <= 0)
         {
+            Random random = new Random();
+            int chanceForDropp = random.Next(1, 101);
+
+            if (chanceForDropp > 0 && chanceForDropp <= 78)
+            {
+                hero.HealingPotionDropp();
+            }
+
             dragonsToSlain--;
             hero.Experience += 25;
             Console.WriteLine($"You killed a {Dragon.MinionDragons.Name}");
@@ -422,7 +435,6 @@ class Game
         else if (Boss.DragonBoss.Health <= 0)
         {
             GameWon = true;
-
         }
         else
         {
@@ -435,7 +447,7 @@ class Game
             else if (randomSpell == 1)
                 attack.FireDamage(hero);
 
-            else if (randomSpell == 0)
+            else if (randomSpell == 2)
                 attack.FrostDamage(hero);
         }
 

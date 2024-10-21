@@ -41,6 +41,14 @@ public class Dragon
             MinionDragons = new Dragon("FireDragon", 800, 10, 0, hero.Level);
         else if (randomDragon == 2)
             MinionDragons = new Dragon("PoisonDragon", 800, 10, 0, hero.Level);
+
+        for (int i = 1; i < hero.Level; i++)
+        {
+            MinionDragons.Strength = MinionDragons.Strength + 2;
+            MinionDragons.SpellPower = MinionDragons.SpellPower + 2;
+            MinionDragons.Health = MinionDragons.Health + 110;
+            MinionDragons.MaxHealth = MinionDragons.MaxHealth + 110;
+        }
     }
 
 

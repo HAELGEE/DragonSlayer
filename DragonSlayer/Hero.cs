@@ -46,7 +46,7 @@ public class Hero
         else
         {
             Console.WriteLine("You drank a Healing Poition and gained HP");
-            Health += 80;
+            Health += 750;
             //Kontroll ifall Hp på hero blir mer än vad maxhp är, då sätts Hp till Maxhp!
             if (Health > MaxHealth)
                 Health = MaxHealth;
@@ -54,6 +54,12 @@ public class Hero
             HealingPoitions--;
         }
         Console.ReadKey();
+    }
+    public void HealingPotionDropp()
+    {
+        HealingPoitions++;        
+        Console.WriteLine("\nYou found a Healing Potion\n");
+
     }
 
     public void ExperienceCapCheck()

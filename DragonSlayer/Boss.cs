@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,10 +37,9 @@ public class Boss
         {
             strength = strength + 3;
             spellPower = spellPower + 3;
-            health = health + 130;
+            health = health + 130;            
         }
 
         DragonBoss = new Boss("Three Headed Dragon of Doom", strength, spellPower, health);
-
     }
 }

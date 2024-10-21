@@ -14,7 +14,7 @@ internal class Program
             
             Console.WriteLine("Dragon slayer game");
             Console.WriteLine("1.New Game");
-            Console.WriteLine("2.Load Game");
+            Console.WriteLine("2.Load Game (Under Construction)");
             Console.WriteLine("3.Quit");
             choice = Console.ReadLine();
 
@@ -32,6 +32,7 @@ internal class Program
                             do
                             {
                                 Console.WriteLine("You WON, you slained All Dragons!");                                
+                                Console.WriteLine("Do you want to play again?");                                
                                 Console.WriteLine("1.Yes (Create a new hero and start from the beginning)");
                                 Console.WriteLine("2.No (End the game)");
                                 value = Console.ReadLine();

@@ -9,7 +9,7 @@ public class Attack
 {
     static Game game = new Game();
     public Random random = new Random();
-    
+
 
     public Attack()
     {
@@ -21,15 +21,20 @@ public class Attack
     public int PoisonTicks { get; set; }
     public int Fire { get; set; }
     public int FireTicks { get; set; }
+    public int SpellDotTick { get; set; }
+
 
 
 
     public void CastingSpell(Hero hero)
     {
-
         //Här kommer all attack loigik för en spellcaster att komma
+
         double randomDamage = random.Next(100, 151);
         randomDamage = hero.SpellPower + randomDamage;
+
+        int spellDotChance = random.Next(1, 101);
+        int spellDotDamage = hero.SpellPower;
 
         do
         {
@@ -54,24 +59,50 @@ public class Attack
         {
             Console.WriteLine($"You cast a Fireball against {Dragon.MinionDragons.Name} and did {Convert.ToInt32(randomDamage)} damage");
             Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - Convert.ToInt32(randomDamage);
+
+            if (spellDotChance > 0 && spellDotChance < 17)
+            {
+                Console.WriteLine($"{Dragon.MinionDragons.Name} got Burn");
+                SpellDotTick = 2;
+            }
+
+            if (SpellDotTick > 0)
+            {
+                Console.WriteLine($"{Dragon.MinionDragons.Name} took {spellDotDamage - 35} damage from Burn");
+                Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - (spellDotDamage - 35);
+                SpellDotTick--;
+            }
         }
         else if (spellCast == "2")
         {
             Console.WriteLine($"You cast a Ice Shard against {Dragon.MinionDragons.Name} and did {Convert.ToInt32(randomDamage)} damage");
             Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - Convert.ToInt32(randomDamage);
-        }
-        
-        Console.ReadKey();
 
-       // return Dragon._dragon.Health;
+            if (spellDotChance > 0 && spellDotChance < 17)
+            {
+                SpellDotTick = 2;
+                Console.WriteLine($"{Dragon.MinionDragons.Name} got FrostBite");
+            }
+
+            if (SpellDotTick > 0)
+            {
+                Console.WriteLine($"{Dragon.MinionDragons.Name} and took {spellDotDamage - 35} damage from FrostBite");
+                Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - (spellDotDamage - 35);
+                SpellDotTick--;
+            }
+        }
+
+        Console.ReadKey();
     }
     public void CastingSpellAgainstBoss(Hero hero)
     {
-
-        //Här kommer all attack loigik för en spellcaster att komma
+        //Här kommer all attack loigik för en spellcaster att komma emot boss
         double randomDamage = random.Next(100, 151);
         randomDamage = hero.SpellPower + randomDamage;
-        
+
+        int spellDotChance = random.Next(1, 101);
+        int spellDotDamage = hero.SpellPower;
+
         do
         {
             Console.Clear();
@@ -95,19 +126,47 @@ public class Attack
         {
             Console.WriteLine($"You cast a Fireball against {Boss.DragonBoss.Name} and did {Convert.ToInt32(randomDamage)} damage");
             Boss.DragonBoss.Health = Boss.DragonBoss.Health - Convert.ToInt32(randomDamage);
+
+            if (spellDotChance > 0 && spellDotChance < 17)
+            {
+                Console.WriteLine($"{Boss.DragonBoss.Name} got Burn");
+                SpellDotTick = 2;
+            }
+
+            if (SpellDotTick > 0)
+            {
+                Console.WriteLine($"{Boss.DragonBoss.Name} took {spellDotDamage - 35} damage from Burn");
+                Boss.DragonBoss.Health = Boss.DragonBoss.Health - (spellDotDamage - 35);
+                SpellDotTick--;
+            }
         }
         else if (spellCast == "2")
         {
             Console.WriteLine($"You cast a Ice Shard against {Boss.DragonBoss.Name} and did {Convert.ToInt32(randomDamage)} damage");
             Boss.DragonBoss.Health = Boss.DragonBoss.Health - Convert.ToInt32(randomDamage);
+
+            if (spellDotChance > 0 && spellDotChance < 17)
+            {
+                SpellDotTick = 2;
+                Console.WriteLine($"{Boss.DragonBoss.Name} got FrostBite");
+            }
+
+            if (SpellDotTick > 0)
+            {
+                Console.WriteLine($"{Boss.DragonBoss.Name} and took {spellDotDamage - 35} damage from FrostBite");
+                Boss.DragonBoss.Health = Boss.DragonBoss.Health - (spellDotDamage - 35);
+                SpellDotTick--;
+            }
         }
 
         Console.ReadKey();
     }
     public void MeleeAttack(Hero hero)
     {
+
         //Här kommer all attack logik från en melee att komma
         double randomDamage = random.Next(100, 151);
+        int crittChance = random.Next(1, 101);
         randomDamage = hero.Strength + randomDamage;
 
         do
@@ -128,24 +187,37 @@ public class Attack
             }
         } while (meleeAttack != "1" && meleeAttack != "2");
 
-        Console.Clear(); 
+        Console.Clear();
 
         if (meleeAttack == "1")
         {
+            if (crittChance > 0 && crittChance < 20)
+            {
+                randomDamage = randomDamage * 1.5;
+                Console.WriteLine("Critical hit!");
+            }
+
             Console.WriteLine($"You went up to the {Dragon.MinionDragons.Name} and slashed it 3 times and did {Convert.ToInt32(randomDamage)} damage");
             Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - Convert.ToInt32(randomDamage);
         }
         else if (meleeAttack == "2")
         {
+            if (crittChance > 0 && crittChance < 20)
+            {
+                randomDamage = randomDamage * 1.5;
+                Console.WriteLine("Critical hit!");
+            }
+
             Console.WriteLine($"You jumped forward and stabbed {Dragon.MinionDragons.Name} and did {Convert.ToInt32(randomDamage)} damage");
             Dragon.MinionDragons.Health = Dragon.MinionDragons.Health - Convert.ToInt32(randomDamage);
         }
-        
+
         Console.ReadKey();
     }
     public void MeleeAttackAgainstBoss(Hero hero)
     {
-        //Här kommer all attack logik från en melee att komma
+        //Här kommer all attack logik från en melee att komma emot boss
+        int crittChance = random.Next(1, 101);
         double randomDamage = random.Next(100, 151);
         randomDamage = hero.Strength + randomDamage;
 
@@ -171,30 +243,42 @@ public class Attack
 
         if (meleeAttack == "1")
         {
+            if (crittChance > 0 && crittChance < 20)
+            {
+                randomDamage = randomDamage * 1.5;
+                Console.WriteLine("Critical hit!");
+            }
+
             Console.WriteLine($"You went up to the {Boss.DragonBoss.Name} and slashed it 3 times and did {Convert.ToInt32(randomDamage)} damage");
             Boss.DragonBoss.Health = Boss.DragonBoss.Health - Convert.ToInt32(randomDamage);
         }
         else if (meleeAttack == "2")
         {
+            if (crittChance > 0 && crittChance < 20)
+            {
+                randomDamage = randomDamage * 1.5;
+                Console.WriteLine("Critical hit!");
+            }
+
             Console.WriteLine($"You jumped forward and stabbed {Boss.DragonBoss.Name} and did {Convert.ToInt32(randomDamage)} damage");
             Boss.DragonBoss.Health = Boss.DragonBoss.Health - Convert.ToInt32(randomDamage);
         }
 
         Console.ReadKey();
     }
-    public int PoisonDamage(Hero hero)
+    public void PoisonDamage(Hero hero)
     {
         // Lägga in logik för poison
         // Lägger in Poison attack som Poisondrakar han en chans att lägga på Hero vid varje försök till attack
-        // -10 för varje poison tick i Max 3 rundor
+        // Minus damage beroende på spellpower för varje poison tick i Max 3 rundor
         Random random = new Random();
         int randomTurn = random.Next(0, 101);
         double randomDamage = random.Next(100, 151);
 
-        if (Boss.DragonBoss.Name != null)
-            randomDamage = randomDamage + Boss.DragonBoss.Strength;
-        else
+        if (Dragon.MinionDragons.Name.Contains("Poison"))
             randomDamage = randomDamage + Dragon.MinionDragons.Strength;
+        else
+            randomDamage = randomDamage + Boss.DragonBoss.Strength;
 
         Console.WriteLine($"The PoisonDragon spits acid on you and did {Convert.ToInt32(randomDamage)} damage");
         hero.Health = hero.Health - Convert.ToInt32(randomDamage);
@@ -228,22 +312,20 @@ public class Attack
             hero.Health = hero.Health - 10;
             PoisonTicks--;
         }
-        
-        return hero.Health;
     }
-    public int FireDamage(Hero hero)
+    public void FireDamage(Hero hero)
     {
         // Lägga in logik för fire
         // Lägger in Burn attack så Firedrakar han en chans att lägga på Hero vid varje försök till attack
-        // -10 för varje burn tick i Max 3 rundor
+        // Minus damage beroende på spellpower för varje burn tick i Max 3 rundor
         Random random = new Random();
         int randomTurn = random.Next(0, 101);
         double randomDamage = random.Next(100, 151);
 
-        if (Boss.DragonBoss.Name != null)
-            randomDamage = randomDamage + Boss.DragonBoss.Strength;
-        else
+        if (Dragon.MinionDragons.Name.Contains("Fire"))
             randomDamage = randomDamage + Dragon.MinionDragons.Strength;
+        else
+            randomDamage = randomDamage + Boss.DragonBoss.Strength;
 
         Console.WriteLine($"The FireDragon did a huge breath and blew out large Flames of fire on you and did {Convert.ToInt32(randomDamage)} damage");
         hero.Health = hero.Health - Convert.ToInt32(randomDamage);
@@ -277,23 +359,19 @@ public class Attack
             hero.Health = hero.Health - 10;
             FireTicks--;
         }
-
-        // Returnerar Burn, 20 om BurnTick är större än 0 annars returneras 0
-        return hero.Health;
     }
-    public int FrostDamage(Hero hero)
+    public void FrostDamage(Hero hero)
     {
         // Lägga in logik för frost dmg, kanske ha en chans att Hero ska få en stun?
         Random random = new Random();
         double randomDamage = random.Next(100, 151);
-        if (Dragon.MinionDragons.Name.Contains("Frost"))        
+
+        if (Dragon.MinionDragons.Name.Contains("Frost"))
             randomDamage = randomDamage + Dragon.MinionDragons.Strength;
         else
             randomDamage = randomDamage + Boss.DragonBoss.Strength;
 
-        Console.WriteLine($"The FrostDragon blew freezing air and damaged you and did {Convert.ToInt32(randomDamage)} damage");
+        Console.WriteLine($"The FrostDragon blew freezing air and did {Convert.ToInt32(randomDamage)} damage to you");
         hero.Health = hero.Health - Convert.ToInt32(randomDamage);
-
-        return hero.Health;
     }
 }
